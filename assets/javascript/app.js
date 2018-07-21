@@ -30,10 +30,10 @@ var questionThree = {
 var questionFour = {
     question: "Yellowstone National Park's geothermal Morning Glory Pool has changed color over the years. What is responsible for the change?",
     optionA: "Bird droppings",
-    optionB: "Sulfur evaporation",
-    optionC: "Trash",
+    optionB: "Trash",
+    optionC: "Sulfur evaporation",
     optionD: "Climate change",
-    correctAnswer: 3
+    correctAnswer: 2
 };
 
 var questionFive = {
@@ -74,48 +74,59 @@ function display() {
 
     };
 
-// set time
+// set timer
 function run() {
     clearInterval(intervalId);
     intervalId = setInterval(decrement, 1000);
   }
 
-// count down clock
+// count down timer
 function decrement() {
     number--;
     $("#time").html("<div>" + number + "</div>");
     if (number === 0) {
         wrong++;
-        alert("Time's up. Move on to next question.");
+        alert("Time's up!");
         reset();
     }
 }
+
+// stop timer
+function stop() {
+    clearInterval(intervalId);
+  }
 
 // determine if answer selected is correct
 function checkAnswer() {
     if (response == questionSet[i].correctAnswer) {
     right++;
-    $("#message").text("good job! next question...");
+    alert("good job!");
     } else {
         wrong++
-        $("#message").text("oops, wrong answer. next question...");
+        alert("oops, wrong answer...");
     }
-};
+}
 
 // reset form
 function reset() {
-    display();
     i++;
-    response;
-    number=15;
-    run();
+    console.log(i);
+    if (i>4) {
+        endQuiz();
+    } else {
+        response;
+        number=15;
+        display();
+        run();
+    }
 
 }
 
 
 // end quiz and summarize score
 function endQuiz() {
-
+    stop();
+    $("#message").text("You got " + right + " question(s) right.");
 
 }
 
@@ -135,36 +146,11 @@ $(document).ready(function() {
     // store value for user response
     $(".radio").on("change", function() {
         response = ( $(".radio:checked").val() ); 
-        console.log(response);
         checkAnswer();
         reset();
-   
+        if (i>4) {
+            endQuiz();
+        }
     });          
         
-    // $(".radio").on("change", function() {
-    //     response = ( $(".radio:checked").val() ); 
-    //     checkAnswer(response, 1);
-    //     reset();
-    //     console.log(questionSet[0]);
-            
-    // }); 
-    
-    // $(".radio").on("change", function() {
-    //     response = ( $(".radio:checked").val() ); 
-    //     checkAnswer(response, 4);
-    //     reset();
-    //     console.log(questionSet[0]);
-    // }); 
-
-    // $(".radio").on("change", function() {
-    //     response = ( $(".radio:checked").val() ); 
-    //     checkAnswer(response, 4);
-    //     reset();
-    // }); 
-
-    // $(".radio").on("change", function() {
-    //     response = ( $(".radio:checked").val() ); 
-    //     checkAnswer(response, 4);
-    //     reset();
-    // }); 
 });
