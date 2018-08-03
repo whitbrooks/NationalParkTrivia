@@ -147,6 +147,7 @@ $(document).ready(function() {
     $(".radio").on("change", function() {
         response = ( $(".radio:checked").val() ); 
         checkAnswer();
+        $('input[type="radio"]').prop('checked', false); 
         reset();
         if (i>4) {
             endQuiz();
